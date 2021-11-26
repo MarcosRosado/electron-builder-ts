@@ -9,8 +9,9 @@
     "noImplicitAny": false,
     "noEmitOnError": true,
     "esModuleInterop": true,
+    "strictNullChecks": false,
     "typeRoots": [
       "node_modules/@types"
-    ],
+    ]
   }
 }

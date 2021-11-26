@@ -4,7 +4,7 @@ const Error404: React.FC = (props) => {
     const [testData, setTestData] = useState("");
 
     useEffect(()=>{
-        console.log( window.electronAPI.getProjects().then((resp)=>console.log(resp)))
+         window.electronAPI.getProjects().then((resp)=>console.log("RESP",resp)).catch((err)=>console.log("ERR", err))
     },[])
 
     return (

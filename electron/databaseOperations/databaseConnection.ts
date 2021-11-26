@@ -20,10 +20,12 @@ const DbConnect = {
     async getProjects(){
 
         return new Promise(async function (resolve, reject) {
+            // sets the adodb resource folder when in production build
             let isDev = await ipcRenderer.invoke("is-dev");
             if(!isDev){
                 ADODB.PATH = './resources/adodb.js';
             }
+
             let path = null;
             let response = await ipcRenderer.invoke("get-settings", "MNPath");
             let connection = null;
@@ -31,14 +33,12 @@ const DbConnect = {
             if(response === undefined){
                 //caso não esteja definido verifica se o software está instalado no diretório padrão
                 if (DbConnect.checkDefaultPath()) {
-                    // @ts-ignore
                     path = DbConnect.getDefaultPath();
                     // se estiver define o path nas configurações como sendo o do diretório padrão
                     await ipcRenderer.invoke("set-settings",{key: "MNPath", object: {path: path}});
                     // conecta ao banco de dados na pasta do Mata Nativa 4
                     connection = DbConnect.getConnection(path+"\\Dados\\MataNativa.mdb");
                     console.log(connection);
-                    // @ts-ignore
                     connection.query("SELECT * FROM Projeto")
                         .then(response => resolve(JSON.stringify(response, null, 2)))
                         .catch(err => reject(JSON.stringify(err)));
@@ -51,11 +51,10 @@ const DbConnect = {
             else{
                 path = response.path;
                 // verifica se o arquivo MDB está nesse path salvo pelo usuário
-                if(fs.existsSync(path+"\\Dados\\MataNativa.mdb")) {
+                if(fs.existsSync(path+"\\Dados\\MataNativa.md")) {
                     // se o path for válido recupera as informações dos projetos
                     connection = DbConnect.getConnection(path+"\\Dados\\MataNativa.mdb");
                     console.log(connection);
-                    // @ts-ignore
                     connection.query("SELECT * FROM Projeto")
                         .then(response => resolve(JSON.stringify(response, null, 2)))
                         .catch(err => {reject(JSON.stringify(err)); console.log(err)});
