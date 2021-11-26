@@ -1,5 +1,4 @@
 import {ipcRenderer} from "electron";
-import * as path from "path";
 const ADODB = require("node-adodb");
 const fs = require("fs")
 const DbConnect = {
@@ -38,7 +37,6 @@ const DbConnect = {
                     await ipcRenderer.invoke("set-settings",{key: "MNPath", object: {path: path}});
                     // conecta ao banco de dados na pasta do Mata Nativa 4
                     connection = DbConnect.getConnection(path+"\\Dados\\MataNativa.mdb");
-                    console.log(connection);
                     connection.query("SELECT * FROM Projeto")
                         .then(response => resolve(JSON.stringify(response, null, 2)))
                         .catch(err => reject(JSON.stringify(err)));
@@ -51,13 +49,12 @@ const DbConnect = {
             else{
                 path = response.path;
                 // verifica se o arquivo MDB está nesse path salvo pelo usuário
-                if(fs.existsSync(path+"\\Dados\\MataNativa.md")) {
+                if(fs.existsSync(path+"\\Dados\\MataNativa.mdb")) {
                     // se o path for válido recupera as informações dos projetos
                     connection = DbConnect.getConnection(path+"\\Dados\\MataNativa.mdb");
-                    console.log(connection);
                     connection.query("SELECT * FROM Projeto")
                         .then(response => resolve(JSON.stringify(response, null, 2)))
-                        .catch(err => {reject(JSON.stringify(err)); console.log(err)});
+                        .catch(err => {reject(JSON.stringify(err))});
                 }
                 else{
                     // caso contrário return false

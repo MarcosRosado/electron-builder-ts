@@ -3,6 +3,7 @@ import * as path from 'path';
 import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 import isDev from 'electron-is-dev'
 import settings from "electron-settings";
+const electronLog = require('electron-log');
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -20,18 +21,7 @@ function createWindow() {
     win.loadURL('http://localhost:3000/index.html');
 
     win.webContents.openDevTools();
-
     // Hot Reloading on 'node_modules/.bin/electronPath'
-    require('electron-reload')(__dirname, {
-      electron: path.join(__dirname,
-        '..',
-        '..',
-        'node_modules',
-        '.bin',
-        'electron' + (process.platform === "win32" ? ".cmd" : "")),
-      forceHardReset: true,
-      hardResetMethod: 'exit'
-    });
   }
 }
 
@@ -44,6 +34,7 @@ app.whenReady().then(() => {
   createWindow();
 
   app.on('activate', () => {
+    console.log("AQUI");
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }
@@ -73,6 +64,7 @@ app.whenReady().then(() => {
 
 // restaura o banco a partir do remote
   ipcMain.handle("is-dev", () => {
+    electronLog.info("HELLO LOG")
     return isDev;
   });
 
