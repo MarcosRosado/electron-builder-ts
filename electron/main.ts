@@ -7,8 +7,8 @@ const electronLog = require('electron-log');
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 768,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
@@ -34,7 +34,6 @@ app.whenReady().then(() => {
   createWindow();
 
   app.on('activate', () => {
-    console.log("AQUI");
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
     }

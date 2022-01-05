@@ -1,10 +1,19 @@
 import {ipcRenderer} from "electron";
+import {readFileSync} from "fs";
+const MDBReader = require("mdb-reader");
+
 const ADODB = require("node-adodb");
 const fs = require("fs")
+
 const DbConnect = {
 
     getConnection(path){
         return ADODB.open(`Provider=Microsoft.Jet.OLEDB.4.0;Data Source=${path}`);
+    },
+
+    getConnectionMDBReader(path){
+        const buffer = readFileSync(path);
+        return new MDBReader(buffer);
     },
 
     getDefaultPath(){
@@ -16,8 +25,11 @@ const DbConnect = {
         return fs.existsSync(this.getDefaultPath());
     },
 
-    async getProjects(){
+    async backupProject(){
+        //TODO get and return all projects
+    },
 
+    async getProjects(){
         return new Promise(async function (resolve, reject) {
             // sets the adodb resource folder when in production build
             let isDev = await ipcRenderer.invoke("is-dev");
@@ -59,6 +71,47 @@ const DbConnect = {
                 else{
                     // caso contrário return false
                      reject(false);
+                }
+            }
+        })
+    },
+
+    async getProjectsMDBReader(){
+        return new Promise(async function (resolve, reject) {
+            // sets the adodb resource folder when in production build
+            let path = null;
+            let response = await ipcRenderer.invoke("get-settings", "MNPath");
+            let connection = null;
+            // verifica se o path do software está definido no arquivo de configurações
+            if(response === undefined){
+                //caso não esteja definido verifica se o software está instalado no diretório padrão
+                if (DbConnect.checkDefaultPath()) {
+                    path = DbConnect.getDefaultPath();
+                    // se estiver define o path nas configurações como sendo o do diretório padrão
+                    await ipcRenderer.invoke("set-settings",{key: "MNPath", object: {path: path}});
+                    // conecta ao banco de dados na pasta do Mata Nativa 4
+                    connection = DbConnect.getConnectionMDBReader(path+"\\Dados\\MataNativa.mdb");
+                    connection.getTableNames()
+                        .then(response => resolve(response))
+                        .catch(err => reject(JSON.stringify(err)));
+
+                }
+                // return false para informar que o path é inválido
+                else reject(false);
+            }
+            // caso o path já esteja definido no arquivo de configurações busca a partir dele
+            else{
+                path = response.path;
+                // verifica se o arquivo MDB está nesse path salvo pelo usuário
+                if(fs.existsSync(path+"\\Dados\\MataNativa.mdb")) {
+                    // se o path for válido recupera as informações dos projetos
+                    connection = DbConnect.getConnectionMDBReader(path+"\\Dados\\MataNativa.mdb");
+                    resolve(connection.getTable('Projeto').getData())
+                    reject(JSON.stringify("ERROR"))
+                }
+                else{
+                    // caso contrário return false
+                    reject(false);
                 }
             }
         })

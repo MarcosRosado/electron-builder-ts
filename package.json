@@ -6,13 +6,15 @@
   "homepage": ".",
   "main": "build/electron/main.js",
   "private": true,
+  "peerDependencies": {
+    "@types/node": "^14.17.34"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/jest": "^27.0.2",
-    "@types/node": "^16.11.7",
     "@types/react": "^17.0.35",
     "@types/react-dom": "^17.0.11",
     "electron-devtools-installer": "^3.2.0",
@@ -20,6 +22,7 @@
     "electron-log": "^4.4.1",
     "electron-reload": "^1.5.0",
     "electron-settings": "^4.0.2",
+    "mdb-reader": "^1.0.10",
     "node-adodb": "^5.0.3",
     "nodemon": "^2.0.15",
     "react": "^17.0.2",
