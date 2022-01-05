@@ -7,7 +7,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
             return result;
         }),
     getProjects: () => {
-        return DBConnect.getProjectsMDBReader();
+        return DBConnect.getProjects();
     },
     getSettings: (args) =>
         ipcRenderer.invoke("get-settings", args).then((result) => {

@@ -22,7 +22,6 @@
     "electron-log": "^4.4.1",
     "electron-reload": "^1.5.0",
     "electron-settings": "^4.0.2",
-    "mdb-reader": "^1.0.10",
     "node-adodb": "^5.0.3",
     "nodemon": "^2.0.15",
     "react": "^17.0.2",
