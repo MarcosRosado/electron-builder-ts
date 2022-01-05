@@ -1,197 +1,93 @@
-React-TypeScript-Electron sample with Create React App and Electron Builder
-===========================================================================
+# MataNativaExportApp
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) with `--template typescript`option.
 
-On the top of it, the following features have been added with realatively small changes:
 
-* TypeScript supports for Electron main process source code
-* Hot-relaod support for Electron app
-* Electron Bulder support
+## Getting started
 
-## Available Scripts in addition to the existing ones
+To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
-### `npm run electron:dev`
+Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
 
-Runs the Electron app in the development mode.
+## Add your files
 
-The Electron app will reload if you make edits in the `electron` directory.<br>
-You will also see any lint errors in the console.
+- [ ] [Create](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
+- [ ] [Add files using the command line](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
 
-### `npm run electron:build`
-
-Builds the Electron app package for production to the `dist` folder.
-
-Your Electron app is ready to be distributed!
-
-## Project directory structure
-
-```bash
-my-app/
-├── package.json
-│
-## render process
-├── tsconfig.json
-├── public/
-├── src/
-│
-## main process
-├── electron/
-│   ├── main.ts
-│   └── tsconfig.json
-│
-## build output
-├── build/
-│   ├── index.html
-│   ├── static/
-│   │   ├── css/
-│   │   └── js/
-│   │
-│   └── electron/
-│      └── main.js
-│
-## distribution packges
-└── dist/
-    ├── mac/
-    │   └── my-app.app
-    └── my-app-0.1.0.dmg
+```
+cd existing_repo
+git remote add origin https://gitlab.com/mata-nativa/matanativaexportapp.git
+git branch -M main
+git push -uf origin main
 ```
 
-## Do it yourself from scratch
+## Integrate with your tools
 
-### Generate a React project and install npm dependencies
+- [ ] [Set up project integrations](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://gitlab.com/mata-nativa/matanativaexportapp/-/settings/integrations)
 
-```bash
-create-react-app my-app --template typescript
-cd my-app
-yarn add @types/electron-devtools-installer electron-devtools-installer electron-is-dev electron-reload
-yarn add -D concurrently electron electron-builder wait-on cross-env
-```
+## Collaborate with your team
 
-### Make Electron main process source file
+- [ ] [Invite team members and collaborators](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/project/members/)
+- [ ] [Create a new merge request](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
+- [ ] [Automatically close issues from merge requests](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
+- [ ] [Enable merge request approvals](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
+- [ ] [Automatically merge when pipeline succeeds](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
 
-#### electron/tsconfig.json
+## Test and Deploy
 
-```json
-{
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "sourceMap": true,
-    "strict": true,
-    "outDir": "../build", // Output transpiled files to build/electron/
-    "rootDir": "../",
-    "noEmitOnError": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
-  }
-}
-```
+Use the built-in continuous integration in GitLab.
 
-#### electron/main.ts
+- [ ] [Get started with GitLab CI/CD](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/ci/quick_start/index.html)
+- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/application_security/sast/)
+- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
+- [ ] [Use pull-based deployments for improved Kubernetes management](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/user/clusters/agent/)
+- [ ] [Set up protected environments](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
-```ts
-import { app, BrowserWindow } from 'electron';
-import * as path from 'path';
-import * as isDev from 'electron-is-dev';
-import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+***
 
-let win: BrowserWindow | null = null;
+# Editing this README
 
-function createWindow() {
-  win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  })
+When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://gitlab.com/-/experiment/new_project_readme_content:e9cdc06abeedc5930aa116e5f68060b9?https://www.makeareadme.com/) for this template.
 
-  if (isDev) {
-    win.loadURL('http://localhost:3000/index.html');
-  } else {
-    // 'build/index.html'
-    win.loadURL(`file://${__dirname}/../index.html`);
-  }
+## Suggestions for a good README
+Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
 
-  win.on('closed', () => win = null);
+## Name
+Choose a self-explaining name for your project.
 
-  // Hot Reloading
-  if (isDev) {
-    // 'node_modules/.bin/electronPath'
-    require('electron-reload')(__dirname, {
-      electron: path.join(__dirname, '..', '..', 'node_modules', '.bin', 'electron'),
-      forceHardReset: true,
-      hardResetMethod: 'exit'
-    });
-  }
+## Description
+Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
 
-  // DevTools
-  installExtension(REACT_DEVELOPER_TOOLS)
-    .then((name) => console.log(`Added Extension:  ${name}`))
-    .catch((err) => console.log('An error occurred: ', err));
+## Badges
+On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
 
-  if (isDev) {
-    win.webContents.openDevTools();
-  }
-}
+## Visuals
+Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
 
-app.on('ready', createWindow);
+## Installation
+Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+## Usage
+Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
 
-app.on('activate', () => {
-  if (win === null) {
-    createWindow();
-  }
-});
-```
+## Support
+Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
 
-### Adjust package.json
+## Roadmap
+If you have ideas for releases in the future, it is a good idea to list them in the README.
 
-#### Add properties for Electron
+## Contributing
+State if you are open to contributions and what your requirements are for accepting them.
 
-```json
-  "homepage": ".", # see https://create-react-app.dev/docs/deployment#serving-the-same-build-from-different-paths
-  "main": "build/electron/main.js",
-```
+For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
 
-#### Add properties for Electron Builder
+You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
 
-```json
-  "author": "Your Name",
-  "description": "React-TypeScript-Electron sample with Create React App and Electron Builder",
-  ...
-  "build": {
-    "extends": null, # see https://github.com/electron-userland/electron-builder/issues/2030#issuecomment-386720420
-    "files": [
-      "build/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets" # change the resource directory from 'build' to 'assets'
-    }
-  },
-```
+## Authors and acknowledgment
+Show your appreciation to those who have contributed to the project.
 
-#### Add scripts
+## License
+For open source projects, say how it is licensed.
 
-```json
-  "scripts": {
-    "postinstall": "electron-builder install-app-deps",
-    "electron:dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && tsc -p electron -w\" \"wait-on http://localhost:3000 && tsc -p electron && electron .\"",
-    "electron:build": "yarn build && tsc -p electron && electron-builder",
-```
+## Project status
+If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
 
-## Many thanks to the following articles!
-
-- [⚡️ From React to an Electron app ready for production](https://medium.com/@kitze/%EF%B8%8F-from-react-to-an-electron-app-ready-for-production-a0468ecb1da3)
-- [How to build an Electron app using Create React App and Electron Builder](https://www.codementor.io/randyfindley/how-to-build-an-electron-app-using-create-react-app-and-electron-builder-ss1k0sfer)
-- [Application entry file reset to default (react-cra detected and config changed incorrectly)](https://github.com/electron-userland/electron-builder/issues/2030)
-- [Serving the Same Build from Different Paths](https://create-react-app.dev/docs/deployment#serving-the-same-build-from-different-paths)
-
-## 
